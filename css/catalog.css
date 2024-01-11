@@ -1,0 +1,31 @@
+.catalog__slider {
+    width: 50%;
+}
+
+.catalog__info {
+    width: 50%;
+}
+
+
+
+.catalog__content {
+    display: flex;
+    
+}
+
+.catalog__text {
+    margin: 0;
+    margin-bottom: 30px;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+
+.swiper-slide__image {
+    text-align: center;
+}
+
+.swiper-slide__image img {
+    max-width: 100%;
+}

@@ -1,0 +1,64 @@
+
+.card {
+    text-align: center;
+	background-color: transparent;
+	color: #111;
+	font-size: 16px;
+}
+
+.slider-container {
+	max-width: 1220px;
+	padding: 0 10px;
+	position: relative;
+	margin: 0 auto;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+	width: 32px;
+	height: 64px;
+    background-color: transparent;
+    border: none;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+	display: none;
+}
+
+.swiper-button-prev svg path {
+	transition: fill .3s ease-in-out;
+}
+
+.swiper-button-prev:hover svg path {
+	fill: var(--accent-color);
+}
+
+.swiper-button-next svg path {
+	transition: fill .3s ease-in-out;
+}
+
+.swiper-button-next:hover svg path {
+	fill: var(--accent-color);
+}
+
+.swiper-button-next {
+	right: 5px;
+}
+
+.swiper-button-prev {
+	left: 5px;
+}
+
+.slider-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 100%;
+	margin-bottom: 30px;
+}
+
+.slider-buttons {
+	display: flex;
+	align-items: center;
+}

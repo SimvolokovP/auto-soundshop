@@ -1,0 +1,29 @@
+.footer {
+    padding: 15px 0;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+}
+
+.footer__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.footer__phone {
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: color .3s ease-in-out;
+}
+
+.footer__phone:hover {
+    color: var(--accent-color);
+}
+
+.footer__phone:focus {
+    color: var(--accent-color);
+}
+
+.footer__phone:active {
+    color: var(--accent-color);
+}

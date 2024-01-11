@@ -1,0 +1,43 @@
+.my-marker {
+    position: relative;
+    box-sizing: border-box;
+    transform: translate(-50%, calc(-50% - 24px));
+    cursor: pointer;
+    z-index: 100;
+}
+
+.ymaps3x0--marker:hover.ymaps3x0--marker::after {
+    opacity: 1;
+}
+
+.ymaps3x0--marker::after {
+    transition: opacity .3s ease-in-out;
+    opacity: 0;
+    content: "Адрес";
+    display: block;
+    position: absolute;
+    left: 25px;
+    top: -70px;
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    padding: 4px;
+    border-radius: 2px;
+    font-size: 16px;
+}
+
+.map {
+    height: 520px;
+}
+
+.map canvas {
+    filter: grayscale(1) sepia(10%);
+}
+
+
+.toolbar { position: absolute; z-index: 1000; top: 0; left: 0; display: flex; align-items: center; padding: 16px; } 
+.toolbar a { padding: 16px; }
+
+.ymaps3x0--marker {
+    cursor: pointer;
+    width: 24px;
+}

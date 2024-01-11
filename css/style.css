@@ -1,0 +1,17 @@
+@import 'global.css';
+@import 'normalize.css';
+@import 'settings.css';
+@import 'header.css';
+@import 'header-catalog.css';
+@import 'hero.css';
+@import 'advantages.css';
+@import 'about.css';
+@import 'catalog.css';
+@import 'shop.css';
+@import 'products.css';
+@import 'cart-header.css';
+@import 'footer.css';
+@import 'btn.css';
+@import 'slider.css';
+@import 'map.css';
+@import 'media.css';

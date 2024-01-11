@@ -1,0 +1,39 @@
+.header-catalog {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    min-height: 40px;
+    padding: 0 0;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.header-catalog__wrapper {
+    transition: background-color 0.3s ease-in-out;
+    position: fixed;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 50;
+    background-color: var(--light-color);
+    box-shadow: 0px 4px 4px 0px rgba(135, 135, 135, 0.25);
+}
+
+.header-catalog__body {
+    transition: min-height 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    min-height: 60px;
+}
+
+
+.header-catalog__wrapper--scroll {
+    background-color: rgba(248, 248, 249, 0.7);
+}
+
+.header-catalog__wrapper--scroll:hover {
+    background-color: rgba(248, 248, 249, 0.8);
+}

@@ -1,0 +1,38 @@
+.btn {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    width: 213px;
+    height: 52px;
+    border-radius: 2px;
+    transition: background-color .3s ease-in-out;
+    border: none;
+}
+
+@media (hover: hover) {
+    .btn:hover {
+        background-color: var(--accent-color);
+    }
+}
+
+@media (hover: none) {
+    .btn {
+        background-color: var(--dark-color);
+    }
+}
+
+/* .btn:hover {
+    background-color: var(--accent-color);
+} */
+
+.btn:focus {
+    outline: var(--dark-color);
+}
+
+.btn:active {
+    background-color: var(--accent-color);
+}
+

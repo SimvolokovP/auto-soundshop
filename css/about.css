@@ -1,0 +1,16 @@
+.about {
+    background-color: var(--dark-color);
+    color: var(--light-color);
+    padding-top: 140px;
+}
+
+.about__container {
+    text-align: center;
+}
+
+.about__text {
+    margin: 0 auto;
+    max-width: 900px;
+    line-height: 150%; /* 27px */
+    font-size: 18px;
+}
