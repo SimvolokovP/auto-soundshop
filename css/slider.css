@@ -43,10 +43,12 @@
 }
 
 .swiper-button-next {
+	z-index: 50;
 	right: 5px;
 }
 
 .swiper-button-prev {
+	z-index: 50;
 	left: 5px;
 }
 

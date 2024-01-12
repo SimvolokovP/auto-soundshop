@@ -69,12 +69,14 @@
     cursor: pointer;
     width: 40px;
     height: 25px;
+    min-width: 40px;
     display: block;
     border: none;
     background-color: transparent;
     flex-direction: column;
     justify-content: space-between;
     display: none;
+    flex-shrink: 1;
 }
 
 .btn__burger span {

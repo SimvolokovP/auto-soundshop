@@ -47,10 +47,13 @@
     border: none;
     background-color: transparent;
     cursor: pointer;
+    color: var(--dark-color);
 }
 
-.item-product__details:hover {
-    text-decoration: underline;
+@media (hover: hover) {
+    .item-product__details:hover {
+        text-decoration: underline;
+    }
 }
 
 .item-product__img img {
