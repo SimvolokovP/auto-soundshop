@@ -1,5 +1,4 @@
 window.onload = function () {
-    
     //header
     const headerEl = document.querySelector('.header-catalog');
     const headerWrapper = document.querySelector('.header-catalog__wrapper');

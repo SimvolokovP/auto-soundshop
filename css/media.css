@@ -47,6 +47,13 @@
     }
 }
 
+@media (max-width: 980px) {
+
+    .products__items {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 940px) {
     .advantages__descr {
         font-size: 14px;
@@ -79,10 +86,10 @@
         top: 0;
         left: 0;
         right: 0;
-        padding: 90px 15px 30px 30px;
+        padding: 152px 15px 30px 30px;
         text-align: center;
-        background-color: rgb(255, 255, 255, 0.95);
-        height: 100vh;
+        background-color: rgb(255, 255, 255, 0.97);
+        height: 100%;
         transform: translateX(100%);
         transition: transform .6s;
         z-index: 900;
@@ -109,17 +116,14 @@
         transition: all .3s;
     }
 
-    .btn__burger--active span:nth-child(2) {
-        opacity: 0;
+    .btn__burger svg {
+        transition: transform .3s ease-in-out;
     }
 
-    .btn__burger--active span:nth-child(1) {
-        transform: rotate(45deg);
+    .btn__burger--active svg {
+        transform: rotate(180deg);
     }
 
-    .btn__burger--active span:nth-child(3) {
-        transform: rotate(-45deg) translateY(-2px) translateX(2px);
-    }
 
     .menu__link {
         font-size: 25px;
@@ -136,6 +140,23 @@
     .about__text {
         line-height: 176%;
         font-size: 16px;
+    }
+
+
+    .header__logo {
+        margin-bottom: 20px;
+    }
+
+    .header__actions {
+        z-index: 1000;
+        display: block;
+    }
+
+}
+
+@media (max-width: 690px) {
+    .products__items {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
@@ -157,18 +178,27 @@
         font-size: 19px;
     }
 
-    .swiper-button-prev svg {
-        width: 24px;
-        height: 42px;
-    }
-
-    .swiper-button-next svg {
-        width: 24px;
-        height: 42px;
-    }
-
     .shop__text {
         font-size: 16px;
+    }
+}
+
+@media (max-width: 592px) {
+    .order-modal,
+    .card-modal {
+        top: -100%;
+    }
+
+    .order {
+        padding: 0;
+    }
+
+    .order__label {
+        flex-direction: column;
+    }
+
+    .order-modal__top {
+        padding-top: 20px;
     }
 }
 
@@ -181,15 +211,6 @@
         font-size: 48px;
     }
 
-    .swiper-button-prev svg {
-        width: 16px;
-        height: 36px;
-    }
-
-    .swiper-button-next svg {
-        width: 16px;
-        height: 36px;
-    }
 
     .map {
         height: 360px;

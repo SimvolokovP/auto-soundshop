@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Погремуха</title>
+    <link rel="stylesheet" href="css/modal.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -23,7 +24,7 @@
                             </a>
                             <div class="cart-header__body">
                                 <ul class="cart-header__list cart-list"></ul>
-                                <button class="cart-header__order btn-reset">Оформить заказ</button>
+                                <button class="cart-header__order btn-reset" data-graph-path="modal" data-graph-animation="fadeInUp" data-graph-speed="700">Оформить заказ</button>
                                 <div class="cart-header__full-price">full-price: <span>1</span></div>
                             </div>
                         </div>
@@ -33,6 +34,39 @@
         </header>
         <main class="main">
             <section class="products">
+                <div class="container search__container">
+                    <div class="search-content" id="search-container">
+                        <input class="search-input"
+                          type="search"
+                          id="search-input"
+                          placeholder="Поиск товаров по названию.."/>
+                          <button class="search-btn btn-reset"></button>
+                        
+                    </div>
+                      <div class="search__buttons" id="buttons">
+                        <button class="button-value btn__search button-value--active" onclick="filterProduct('Все')">Все</button>
+                        <button class="button-value btn__search" onclick="filterProduct('Автозвук')">
+                          Автозвук
+                        </button>
+                        <button class="button-value btn__search" onclick="filterProduct('Аксессуары')">
+                            Аксессуары
+                        </button>
+                        <!-- <label class="order__label">
+                            <span class="order__text">Адрес доставки</span>
+                            <div class="order__dropdown">
+                                <div class="select">
+                                    <span class="selected">Выберете адрес</span>
+                                    <div class="caret"></div>
+                                </div>
+                                <ul class="droplist list-reset">
+                                    <li class="droplist__item">Воронеж/Воронежская обл.</li>
+                                    <li class="droplist__item">РФ</li>
+                                    
+                                </ul>
+                            </div>
+                        </label> -->
+                      </div>
+                </div>
                 <div class="container products__container">
                     <div class="products__items">               
                     </div>
@@ -43,6 +77,72 @@
                 </div>
             </section>
         </main>
+
+        <div class="modal">
+            <div class="modal__container order-modal" role="dialog" aria-modal="true" data-graph-target="modal">
+                <button class="btn-reset modal__close">Закрыть</button>
+                <div class="modal__content order-modal__content">
+                    <div class="order-modal__top">
+                        <h2 class="order-modal__title">Оформелние заказа</h2>
+                        <div class="order-modal__full-price">Общая сумма заказа: <span>0</span></div>
+                    </div>
+                    <form class="order-modal__form order" id="tg">
+                        <div class="order__box">
+                            <label class="order__label">
+                                <span class="order__text">Ваше имя</span>
+                                <input class="order__input order__fio" name="fio" data-validate-field="fio" type="text">
+                            </label>
+                            <label class="order__label">
+                                <span class="order__text">Номер телефона</span>
+                                <input class="order__input" name="phone" data-validate-field="phone" type="tel" placeholder="+7 (___)___-__-__">
+                            </label>
+
+                            <label class="order__label">
+                                <span class="order__text">Адрес доставки</span>
+                                <div class="order__dropdown">
+                                    <div class="select">
+                                        <span class="selected">Выберете адрес</span>
+                                        <div class="caret"></div>
+                                    </div>
+                                    <ul class="droplist list-reset">
+                                        <li class="droplist__item">Воронеж/Воронежская обл.</li>
+                                        <li class="droplist__item">РФ</li>
+                                        
+                                    </ul>
+                                </div>
+                            </label>
+
+                            <label class="order__label order__label--condition">
+                                <span class="order__text">Транспортная компания</span>
+                                <input class="order__input" name="adress" type="text">
+                            </label>
+
+                            <label class="order__label order__label--condition">
+                                <span class="order__text">Еще</span>
+                                <input class="order__input" name="adress" type="text">
+                            </label>
+                            
+                        </div>
+                        <button type="submit" class="order__btn btn-reset btn">Оформить заказ</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="modal__container card-modal" role="dialog" aria-modal="true" data-graph-target="cardModal">
+                <button class="btn-reset modal__close">Закрыть</button>
+                <div class="modal__content card-modal__content">
+                    <div class="cart-list__image ibg">${cartProductImage}</div>
+                    <div class="card-modal__info">
+                        <h3 class="card-modal__title">${cartProductTitle}</h3>
+                        <span class="card-modal__price">${cartProductPrice}</span>
+                        <p class="card-modal__descr">descr</p>
+                    </div>
+                    </div>
+            </div>
+        </div>
+
+        
+
         <footer class="footer">
             <div class="container">
                 <div class="footer__inner">
@@ -54,7 +154,13 @@
             </div>
         </footer>
     </div>
+    <script src="js/modal.js"></script>
     <script src="js/header-catalog.js"></script>
     <script src="js/shop-actions.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
+    <script src="js/just-validate.min.js"></script>
+    <script src="js/inputmask.min.js"></script>
+    <script src="js/validate.js"></script>
 </body>
 </html>

@@ -5,7 +5,7 @@
 
 .products__items {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(285px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 32px;
 }
 
@@ -14,6 +14,11 @@
     flex-direction: column;
     position: relative;
     background-color: #F4F5F7;
+    box-shadow: 0px 0px 11px 0px rgba(135, 135, 135, 0.25);
+}
+
+.products__item--hide {
+    display: none;
 }
 
 .item-product__img {

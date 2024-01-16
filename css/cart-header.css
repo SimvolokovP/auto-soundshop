@@ -22,12 +22,18 @@
     transition: stroke .1s ease-in-out;
 }
 
-.cart-header__icon:hover svg path {
-    stroke: var(--accent-color);
-}
 
-.cart-header__icon:hover svg circle {
-    stroke: var(--accent-color);
+
+
+
+@media (hover: hover) {
+    .cart-header__icon:hover svg circle {
+        stroke: var(--accent-color);
+    }
+
+    .cart-header__icon:hover svg path {
+        stroke: var(--accent-color);
+    }
 }
 
 .cart-header__icon span {
@@ -99,7 +105,7 @@
     top: 60px;
     right: 0;
     padding: 15px;
-    width: 300px;
+    width: 470px;
     z-index: 5;
     opacity: 0;
     visibility: hidden;

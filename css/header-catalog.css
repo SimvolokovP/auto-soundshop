@@ -31,9 +31,9 @@
 
 
 .header-catalog__wrapper--scroll {
-    background-color: rgba(248, 248, 249, 0.85);
+    background-color: rgba(248, 248, 249, 0.95);
 }
 
 .header-catalog__wrapper--scroll:hover {
-    background-color: rgba(248, 248, 249, 0.95);
+    background-color: rgba(248, 248, 249, 0.99);
 }
