@@ -1,4 +1,11 @@
-.order__dropdown {
+.search__category {
+    width: max-content;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.dropdown {
     position: relative;
 }
 
@@ -6,7 +13,7 @@
     transition: .3s;
     width: 240px;
     height: 45px;
-    background-color: var(--background-color);
+    background-color: var(--light-color);
     border: 1px solid var(--dark-color);
     border-radius: 2px;
     padding: 10px;
@@ -48,6 +55,10 @@
     display: none;
     z-index: 1;
     transition: all .3s;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 100%;
 
 }
 
@@ -70,4 +81,8 @@
         background-color: var(--dark-color);
         color: var(--light-color);
     }
+}
+
+.sub-category__dropdown {
+    display: none;
 }

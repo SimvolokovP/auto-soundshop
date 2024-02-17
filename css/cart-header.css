@@ -2,7 +2,7 @@
     opacity: 1;
     position: fixed;
     z-index: 100;
-    transition: all 1s ease 0s;
+    transition: all .6s ease 0s;
 }
 
 .cart-header {
@@ -158,6 +158,13 @@
     font-weight: 700;
 }
 
-.hold {
-    filter: grayscale(1) sepia(10%);
+.actions-product__button.hold {
+    background-color: gray;
+    cursor: auto;
+}
+
+@media (hover: hover) {
+    .actions-product__button.hold:hover {
+        background-color: gray;
+    }
 }

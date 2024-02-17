@@ -9,7 +9,12 @@
 </head>
 <body>
     <div class="wrapper">
-        <header class="header header-catalog">
+        <div class="preload" data-preload>
+            <div class="preload__circle">
+            </div>
+            <div class="preload__text">Погремуха</div>
+        </div>
+        <header class="header header-catalog" id="catalog-id">
             <div class="header-catalog__wrapper">
                 <div class="container">
                     <div class="header-catalog__body">
@@ -21,6 +26,7 @@
                                     <circle cx="10.625" cy="23.75" r="2.5" stroke="#262F56" stroke-width="1.8"/>
                                     <circle cx="22.5" cy="23.75" r="2.5" stroke="#262F56" stroke-width="1.8"/>
                                 </svg>
+                                <span>0</span>
                             </a>
                             <div class="cart-header__body">
                                 <ul class="cart-header__list cart-list"></ul>
@@ -33,46 +39,52 @@
             </div>
         </header>
         <main class="main">
-            <section class="products">
+            <section class="search">
                 <div class="container search__container">
                     <div class="search-content" id="search-container">
                         <input class="search-input"
                           type="search"
-                          id="search-input"
+                          id="searchInput"
                           placeholder="Поиск товаров по названию.."/>
-                          <button class="search-btn btn-reset"></button>
-                        
+                          <button id="searchButton" class="search-btn btn-reset"></button>
                     </div>
-                      <div class="search__buttons" id="buttons">
-                        <button class="button-value btn__search button-value--active" onclick="filterProduct('Все')">Все</button>
-                        <button class="button-value btn__search" onclick="filterProduct('Автозвук')">
-                          Автозвук
-                        </button>
-                        <button class="button-value btn__search" onclick="filterProduct('Аксессуары')">
-                            Аксессуары
-                        </button>
-                        <!-- <label class="order__label">
-                            <span class="order__text">Адрес доставки</span>
-                            <div class="order__dropdown">
-                                <div class="select">
-                                    <span class="selected">Выберете адрес</span>
-                                    <div class="caret"></div>
+                    <div class="search__category">
+                        <div class="dropdown category__dropdown">
+                            <span>Поиск по категории товара</span>
+                            <div class="select category__select">
+                                <span class="selected category__selected">Все</span>
+                                <div class="caret category__caret"></div>
+                            </div>
+                            <ul class="droplist category__list">
+                                <li class="droplist__item category__item">Все</li>
+                                <li class="droplist__item category__item">Категория 1</li>
+                                <li class="droplist__item category__item">Категория 2</li>
+                            </ul>
+                        </div>
+                        <div class="sub-category__container">
+                            <div class="dropdown sub-category__dropdown">
+                                <span>Подкатегория</span>
+                                <div class="select category__select">
+                                    <span class="selected sub-category__selected">Все</span>
+                                    <div class="caret sub-category__caret"></div>
                                 </div>
-                                <ul class="droplist list-reset">
-                                    <li class="droplist__item">Воронеж/Воронежская обл.</li>
-                                    <li class="droplist__item">РФ</li>
+                                <ul class="droplist sub-category__list">
                                     
                                 </ul>
-                            </div>
-                        </label> -->
-                      </div>
+                                </div>
+                        </div>
+                    </div>
                 </div>
+            </section>
+            <section class="products">
                 <div class="container products__container">
                     <div class="products__items">               
                     </div>
 
                     <div class="products__footer">
                         <button class="products__more">Еще</button>
+                        <div class="products__pagination" id="pagination">
+                        </div>
                     </div>
                 </div>
             </section>
@@ -98,28 +110,7 @@
                             </label>
 
                             <label class="order__label">
-                                <span class="order__text">Адрес доставки</span>
-                                <div class="order__dropdown">
-                                    <div class="select">
-                                        <span class="selected">Выберете адрес</span>
-                                        <div class="caret"></div>
-                                    </div>
-                                    <ul class="droplist list-reset">
-                                        <li class="droplist__item">Воронеж/Воронежская обл.</li>
-                                        <li class="droplist__item">РФ</li>
-                                        
-                                    </ul>
-                                </div>
-                            </label>
-
-                            <label class="order__label order__label--condition">
-                                <span class="order__text">Транспортная компания</span>
-                                <input class="order__input" name="adress" type="text">
-                            </label>
-
-                            <label class="order__label order__label--condition">
-                                <span class="order__text">Еще</span>
-                                <input class="order__input" name="adress" type="text">
+                                
                             </label>
                             
                         </div>
@@ -162,5 +153,6 @@
     <script src="js/just-validate.min.js"></script>
     <script src="js/inputmask.min.js"></script>
     <script src="js/validate.js"></script>
+    <script src="js/preload.js"></script>
 </body>
 </html>

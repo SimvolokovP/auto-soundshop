@@ -1,3 +1,7 @@
+.search {
+    padding-top: 120px;
+}
+
 .search-content {
     text-align: left;
     margin-bottom: 20px;
@@ -18,6 +22,8 @@
 
 .search__container {
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
 
 .search-input {
@@ -33,6 +39,7 @@
     text-align: left;
     appearance: none;
     margin-right: 10px;
+    background-color: var(--light-color);
 }
 
 .btn__search {

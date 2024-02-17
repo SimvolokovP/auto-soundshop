@@ -12,10 +12,12 @@
 @import 'search.css';
 @import 'cart-header.css';
 @import 'footer.css';
+@import 'preload.css';
 @import 'btn.css';
 @import 'slider.css';
 @import 'map.css';
 @import 'order-modal.css';
 @import 'product-modal.css';
 @import 'dropdown.css';
+@import 'animations.css';
 @import 'media.css';

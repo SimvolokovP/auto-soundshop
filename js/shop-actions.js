@@ -2,6 +2,11 @@ document.addEventListener('click', documentActions);
 const btnMore = document.querySelector('.products__more');
 const btnsAddToCart = document.querySelectorAll('.actions-product__button');
 
+let currentPage = 1;
+const productsPerPage = 12;
+
+let productsList = [];
+
 let productsArray = [];
 let fullPrice = 0;
 
@@ -22,6 +27,7 @@ function documentActions(e) {
         
         const productId = targetElement.closest('.item-product').dataset.id;
         console.log(productId);
+        
         addToCart(targetElement, productId);
         
     }
@@ -41,6 +47,7 @@ function documentActions(e) {
     if (targetElement.classList.contains('cart-list__delete')) {
         const productId = targetElement.closest(".cart-list__item").dataset.cartId;
         updateCart(targetElement, productId, false);
+        
         e.preventDefault();
     }
 
@@ -66,13 +73,17 @@ function documentActions(e) {
 async function getProducts(button) {
     if (!button.classList.contains('hold')) {
         button.classList.add('hold');
-        const file = "/json/products.json";
+        const file = '/json/products.json?timestamp=' + new Date().getTime();
         let response = await fetch(file, {
             method: "GET"
         });
         if (response.ok) {
             let result = await response.json();
+            productsList = result;
+            products = result.products;
+            
             loadProducts(result);
+            console.log()
             button.classList.remove('hold');
             button.remove();
         } else {
@@ -81,16 +92,57 @@ async function getProducts(button) {
     }
 }
 
-function loadProducts(data) {
-    const productsItems = document.querySelector('.products__items');
 
-    data.products.forEach(item => {
+function loadProducts(data) {
+    const startIndex = (currentPage - 1) * productsPerPage;
+    const endIndex = startIndex + productsPerPage;
+    const products = data.products;
+    let items = [];
+    let st = data.products.length;
+    const value = document.querySelector('.search-input').value;
+    const categoryDropDown = document.querySelector('.category__dropdown');
+    products.forEach(el => {
+        const productTitle = el.title;
+        const productCategory = el.category;
+        const productSubCategory = el.subCategory;
+        if (productTitle.toUpperCase().includes(value.toUpperCase())) {
+            if (categoryDropDown.classList.contains('category__dropdown--active')) {
+                const categorySelected = document.querySelector('.category__selected');
+                if (categorySelected.innerHTML.toUpperCase() == productCategory.toUpperCase()) {
+                    
+                    if (document.querySelector('.sub-category__selected').innerHTML.toUpperCase() != 'Все'.toUpperCase()) {
+                        if (document.querySelector('.sub-category__selected').innerHTML.toUpperCase() == productSubCategory.toUpperCase()) {
+                            items.push(el);
+                        }
+                    } else {
+                        items.push(el);
+                    }
+
+                    
+                }
+            } else {
+                items.push(el);
+            }
+            
+        };
+    });
+    let en = items.length;
+    let r = st - en;
+    items = items.slice(startIndex, endIndex);
+    
+    
+    const productsItems = document.querySelector('.products__items');
+    productsItems.innerHTML = '';
+    createPaginationButtons(data, r);
+
+    items.forEach(item => {
         const productId = item.id;
         const productTitle = item.title;
         const productImage = item.image;
         const productPrice = item.price;
         const productDescr = item.descr;
         const productCategory = item.category;
+        const productAvaibility = item.availability;
         
         let template = `<article data-id="${productId}" class="products__item item-product">
         <div class="item-product__img">
@@ -99,7 +151,13 @@ function loadProducts(data) {
         <div class="item-product__body">
             <div class="item-product__content">
                 <h5 class="item-product__title">${productTitle}</h5>
-                <button class="item-product__details" data-graph-path="cardModal" data-graph-animation="fadeInUp" data-graph-speed="700">подробнее</button>
+                <div class="item-product__inner">
+                    <button class="item-product__details" data-graph-path="cardModal" data-graph-speed="300">подробнее</button>
+                    <div class="avaibility">
+                        <div class="item-product__point"></div>
+                        <div class="item-product__availability">${productAvaibility}</div>
+                    </div>    
+                </div>
             </div>
             <div class="item-product__price">${productPrice} руб.</div>
             <div class="item-product__actions actions-product">
@@ -111,9 +169,44 @@ function loadProducts(data) {
     </article>`;
     
     titlesArray.push(productTitle);
-    console.log(titlesArray);
+    // const value = document.querySelector('.search-input').value;
+    // if (productTitle.toUpperCase().includes(value.toUpperCase())) {
+        
+    //     productsItems.insertAdjacentHTML('beforeend', template);
+    //     console.log(data);
+    //     createPaginationButtons(data);
+    // }
     productsItems.insertAdjacentHTML('beforeend', template);
+    availabilityCheck();
     });
+}
+
+function createPaginationButtons(totalProducts, number) {
+    const totalPages = Math.ceil((totalProducts.products.length - number) / productsPerPage);
+    const paginationContainer = document.getElementById('pagination');
+    paginationContainer.innerHTML = ''; 
+
+    for (let i = 1; i <= totalPages; i++) {
+        const button = document.createElement('button');
+        button.innerText = i;
+        button.classList.add('pagination__btn');
+        button.addEventListener('click', (event) => {
+            currentPage = event.target.innerText; 
+            getProducts(button); 
+
+            document.getElementById('catalog-id').scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        });
+
+        
+
+        paginationContainer.appendChild(button);
+
+        checkActivePagination();
+    }
+
 }
 
 function addToCart(productBtn, productId) {
@@ -195,7 +288,7 @@ function updateCart(productBtn, productId, productAdd = true) {
     const cartQuantity = cartIcon.querySelector('span');
     const cartProduct = document.querySelector(`[data-cart-id="${productId}"]`);
     const cartList = document.querySelector('.cart-list');
-
+    
     if (productAdd) {
         if (cartQuantity) {
             cartQuantity.innerHTML = ++cartQuantity.innerHTML;
@@ -228,7 +321,7 @@ function updateCart(productBtn, productId, productAdd = true) {
             const cartProductQuantity = cartProduct.querySelector('.cart-list__quantity span');
             cartProductQuantity.innerHTML = ++cartProductQuantity.innerHTML;
         }
-
+        
         getFullPrice();
         productBtn.classList.remove('hold');
     } else {
@@ -237,18 +330,24 @@ function updateCart(productBtn, productId, productAdd = true) {
 
         if (!parseInt(cartProductQuantity.innerHTML)) {
             cartProduct.remove();
+            
+            updateStorage();
         }
 
         const cartQuantityValue = --cartQuantity.innerHTML;
-
+        console.log(cartQuantityValue)
         if (cartQuantityValue) {
             cartQuantity.innerHTML = cartQuantityValue;
+            
         } else {
-            cartQuantity.remove();
-            cartBody.classList.remove('cart-header__body--active')
+            
+            cartBody.classList.remove('cart-header__body--active');
+            
         }
+        
         getFullPrice();
     }
+    updateStorage();
 }
 
 function getOrder() {
@@ -322,8 +421,9 @@ function clearCart() {
     items.forEach(el => {
         el.remove();
     });
-
-    quantitySpan.remove();
+    quantitySpan.innerHTML = '0';
+    updateStorage();
+    
 }
 
 
@@ -341,7 +441,7 @@ function pushOrder(button) {
             let message = `<b>Заявка с сайта</b>\n`;
             message += `<b>Отправитель: </b> ${ this.name.value}\n`;
             message += `<b>Номер телефона: </b> ${ this.phone.value}\n`;
-            message += `<b>Текущий заказ: </b> ${ JSON.stringify(productsArray)}`;
+            message += `<b>Текущий заказ: </b> ${ JSON.stringify(productsArray).replace(/title/g,'название').replace(/,/g, '\n').replace(/quantity/g,'кол-во')}`;
             console.log(message);
 
             if (!button.classList.contains('hold')) {
@@ -364,6 +464,7 @@ function pushOrder(button) {
                     
                     console.log("end");
                     clearCart();
+                    
                     button.classList.remove('hold');
                     alert("Заказ отправлен!");
                 })
@@ -372,104 +473,77 @@ function pushOrder(button) {
 }
 
 
+const input = document.getElementById("searchInput");
+input.addEventListener("input", () => {
+    document.querySelector('.sub-category__selected').innerHTML = 'Все';
+    document.querySelector('.category__selected').innerHTML = 'Все';
+    document.querySelector('.category__dropdown').classList.remove('category__dropdown--active');
+    currentPage = 1;
+    loadProducts(productsList);
+    checkItemsList();
+});
 
-function filterProduct(value) {
-    //Button class code
-    let buttons = document.querySelectorAll(".button-value");
-    buttons.forEach((button) => {
-      //check if value equals innerText
-      if (value.toUpperCase() == button.innerText.toUpperCase()) {
-        button.classList.add("button-value--active");
-      } else {
-        button.classList.remove("button-value--active");
-      }
-    });
-
-    value.toLowerCase();
-  
-    //select all cards
-    let elements = document.querySelectorAll(".products__item");
-    //loop through all cards
-    elements.forEach((element) => {
-        let category = element.querySelector('.item-product__category').innerHTML.toLowerCase();;
-      //display all cards on 'all' button click
-      if (value == "Все") {
-        element.classList.remove("products__item--hide");
-      } else {
-        //Check if element contains category class
-        if (value.toLowerCase() == category) {
-          //display element based on category
-          element.classList.remove("products__item--hide");
-        } else {
-          //hide other elements
-          element.classList.add("products__item--hide");
-        }
-      }
-    });
-
-    const searchInp = document.querySelector('.search-input');
-
-    searchInp.value = '';
+const initState = () => {
+    if (localStorage.getItem('products') != null) {
+        document.querySelector('.cart-list').innerHTML = localStorage.getItem('products');
+        document.querySelector('.cart-icon span').innerHTML = localStorage.getItem('quantity');
+    }           
 }
 
-// document.getElementById("search").addEventListener("click", () => {
-    
-//     let searchInput = document.getElementById("search-input").value.replace(' ', '');
-//     let elements = document.querySelectorAll(".item-product__title");
-//     let cards = document.querySelectorAll(".products__item");
-//     const categoryBtns = document.querySelectorAll('.button-value');
+initState();
 
-//     categoryBtns.forEach(el => {
-//         el.classList.remove("button-value--active");
-//     })
-    
-//     elements.forEach((element, index) => {
-//         let elementText = element.innerText.toUpperCase();
-//       //check if text includes the search value
-//       if (elementText.includes(searchInput.toUpperCase())) {
-//         //display matching card
-//         cards[index].classList.remove("products__item--hide");
-//       } else {
-//         //hide others
-//         cards[index].classList.add("products__item--hide");
-//       }
-//     });
-// });
+const updateStorage = () => {
+    let parent = document.querySelector('.cart-list');
+    let html = parent.innerHTML;
+    html = html.trim();
+    console.log(html);
+    console.log(html.length);
 
+    let quantity = document.querySelector('.cart-icon span').innerHTML;
+    localStorage.setItem('quantity', quantity);
+    console.log(quantity);
+    if (html.length) {
+        localStorage.setItem('products', html);
+        
+    } else {
+        localStorage.removeItem('products');
+        
+    }
+}
 
-document.querySelector('.search-input').addEventListener('input', (e) => {
-    const list = document.querySelector('.products__items');
-    const items = list.querySelectorAll('.item-product');
-    let value = document.querySelector('.search-input').value;
-    const btns = document.querySelectorAll('.button-value');
+function availabilityCheck() {
+    const productsBox = document.querySelectorAll('.item-product');
+    productsBox.forEach(el => {
+        const prouductAv = el.querySelector('.item-product__availability');
+        console.log(prouductAv);
+        const productButton = el.querySelector('.actions-product__button');
+        const point = el.querySelector('.item-product__point');
 
-    btns.forEach(btn => {
-        btn.classList.remove('button-value--active');
+        if (prouductAv.innerHTML.toUpperCase() == 'Нет в наличии'.toUpperCase()) {
+            productButton.classList.add('hold');
+            point.classList.add('not-available');
+        }
     })
+}
 
-    items.forEach(el => {
-        el.classList.add('products__item--hide');
+function checkActivePagination() {
+    const pagBtns = document.querySelectorAll('.pagination__btn');
+    console.log(pagBtns);
 
-        const itemTitle = el.querySelector('.item-product__title').innerHTML;
-
-        let filterArray = titlesArray;
-        for (let i = 0; i < filterArray.length; i++) {
-            if (itemTitle.toLowerCase().includes(value.toLowerCase())) {
-                el.classList.remove('products__item--hide');
-            }
+    pagBtns.forEach(el => {
+        if (el.innerHTML == currentPage) {
+            console.log(el.innerHTML);
+            el.classList.add('pagination__btn--active');
         }
     });
-    
+}
 
-
-    // let filteredArray = serverArray;
-    // const inputValue = e.currentTarget.value.toLowerCase();
-    // for (let i = 0; i < serverArray.length; i++) {
-    //   if(serverArray[i].toLowerCase().startsWith(inputValue)) {
-    //     filteredArray = serverArray.filter(el => el === serverArray[i]);
-    //     updateList(filteredArray)
-    //   }
-    // }
-  
-    
-  });
+function checkItemsList() {
+    if (document.querySelector('.products__items').innerHTML == '') {
+        const empty = `<div class="catalog__empty">
+        <img class="empty__img" src="img/logo.png" alt="Логотип сайта">
+        <span>К сожалению, <br> по вашему запросу ничего не найдено :(</span>
+        </div>`;
+        document.querySelector('.products__items').insertAdjacentHTML("beforeend", empty);
+    }
+}
